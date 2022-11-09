@@ -15,10 +15,15 @@ import {
 } from '../generated/types';
 
 export const resolver = {
+  Query: {
+    async users() {
+      return [];
+    },
+  },
   Mutation: {
     async createUser(_: unknown, { user: input }: MutationCreateUserArgs) {
       const now = new Date();
-      const { name, lastname, email, password } = input;
+      const { name, lastname, email } = input;
 
       try {
         const prevUser = await models.User.findFirst({

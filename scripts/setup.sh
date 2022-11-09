@@ -7,17 +7,17 @@ mongo <<EOF
         "members": [
             {
                 "_id": 0,
-                "host": "figu-db-0:27017",
+                "host": "mongo-db-0:27017",
                 "priority": 2
             },
             {
                 "_id": 1,
-                "host": "figu-db-1:27017",
+                "host": "mongo-db-1:27017",
                 "priority": 0
             },
             {
                 "_id": 2,
-                "host": "figu-db-2:27017",
+                "host": "mongo-db-2:27017",
                 "priority": 0
             }
         ]

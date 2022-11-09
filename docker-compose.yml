@@ -2,9 +2,9 @@ version: '3.7'
 
 services:
 
-  figu-db-0:
-    hostname: figu-db-0
-    container_name: figu-db-0
+  mongo-db-0:
+    hostname: mongo-db-0
+    container_name: mongo-db-0
     image: mongo:4
     ports:
       - "27017:27017"
@@ -14,16 +14,16 @@ services:
     networks:
       - mongo-net
     links:
-      - figu-db-1:figu-db-1
-      - figu-db-2:figu-db-2
+      - mongo-db-1:mongo-db-1
+      - mongo-db-2:mongo-db-2
     volumes:
       - "./scripts/setup.sh:/scripts/setup.sh"
       - "./scripts/file.key:/data/file.key"
     entrypoint: [ "/usr/bin/mongod", "--keyFile", "/data/file.key", "--replSet", "rs", "--journal", "--bind_ip_all" ]
 
-  figu-db-1:
-    hostname: figu-db-1
-    container_name: figu-db-1
+  mongo-db-1:
+    hostname: mongo-db-1
+    container_name: mongo-db-1
     image: mongo:4
     ports:
       - '27019:27017'
@@ -34,9 +34,9 @@ services:
       - "./scripts/file.key:/data/file.key"
     command: bash -c "/usr/bin/mongod --keyFile /data/file.key --replSet rs --journal --bind_ip_all"
 
-  figu-db-2:
-    hostname: figu-db-2
-    container_name: figu-db-2
+  mongo-db-2:
+    hostname: mongo-db-2
+    container_name: mongo-db-2
     image: mongo:4
     ports:
       - '27018:27017'
@@ -46,6 +46,15 @@ services:
     volumes:
       - "./scripts/file.key:/data/file.key"
     command: bash -c "/usr/bin/mongod --keyFile /data/file.key --replSet rs --journal --bind_ip_all"
+
+  redis:
+    container_name: redis
+    image: redis
+    command: redis-server
+    ports:
+      - 6379:6379
+    expose:
+      - 6379
 
 networks:
   mongo-net:
